@@ -10,7 +10,7 @@ from langchain.schema.output_parser import StrOutputParser
 from langchain.schema.runnable import RunnablePassthrough
 import textwrap
 from html_templates import css, user_template, bot_template
-
+api = st.secrets["GOOGLE_API_KEY"]
 # Wrapping the text for better display
 def wrap_text(text, width=90):
     lines = text.split('\n')
@@ -32,14 +32,14 @@ def get_pdf_text(pdf_docs):
 
 # Create vector store for document embeddings
 def get_vectorstore(docs):
-    gemini_embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
+    gemini_embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001", google_api_key = api)
     vector_store = Chroma.from_documents(docs, gemini_embeddings)
     return vector_store
 
 # Generate a conversation chain
 def get_conversation_chain(vector_store):
     retriever = vector_store.as_retriever(search_type="similarity", search_kwargs={"k": 3})
-    llm = ChatGoogleGenerativeAI(model="gemini-1.5-pro")
+    llm = ChatGoogleGenerativeAI(model="gemini-1.5-pro", google_api_key = api)
     
     template = """Answer the question based only on the following context:
     {context}

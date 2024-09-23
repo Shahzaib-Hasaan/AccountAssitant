@@ -3,13 +3,15 @@ import streamlit as st
 from dotenv import load_dotenv
 import tempfile
 from langchain_google_genai import GoogleGenerativeAIEmbeddings, ChatGoogleGenerativeAI
-from langchain_chroma import Chroma
 from langchain_community.document_loaders import PyPDFLoader
 from langchain.prompts import ChatPromptTemplate
 from langchain.schema.output_parser import StrOutputParser
 from langchain.schema.runnable import RunnablePassthrough
 import textwrap
 from html_templates import css, user_template, bot_template
+from langchain.vectorstores import FAISS
+
+
 api = st.secrets["GOOGLE_API_KEY"]
 # Wrapping the text for better display
 def wrap_text(text, width=90):
@@ -33,7 +35,8 @@ def get_pdf_text(pdf_docs):
 # Create vector store for document embeddings
 def get_vectorstore(docs):
     gemini_embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001", google_api_key = api)
-    vector_store = Chroma.from_documents(docs, gemini_embeddings)
+    vector_store = FAISS.from_documents(docs, gemini_embeddings)
+
     return vector_store
 
 # Generate a conversation chain

@@ -109,7 +109,7 @@ def main():
     if 'vector_store' not in st.session_state:
         st.session_state.vector_store = None
     
-    st.header("Account Assistant")
+    # st.header("Account Assistant")
 
     with st.sidebar:
         st.subheader("Input Webpage URL")

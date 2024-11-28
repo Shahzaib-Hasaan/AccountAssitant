@@ -96,7 +96,7 @@ def get_friendly_response(input_text):
 
 
 def main():
-    st.set_page_config(page_title="AccountAssistant", page_icon="🏦")
+    st.set_page_config(page_title="Chat with webpage", page_icon="🔗")
     load_dotenv()
     st.write(css, unsafe_allow_html=True)
 

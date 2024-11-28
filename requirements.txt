@@ -10,4 +10,5 @@ langchain-google-genai
 google-generativeai
 pypdf
 streamlit
-pip install -qU langchain_community beautifulsoup4
+langchain_community
+beautifulsoup4
